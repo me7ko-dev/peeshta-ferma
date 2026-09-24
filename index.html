@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="bg">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#8fd3ff">
+<title>Пееща ферма</title>
+<meta name="description" content="Докосни животинчетата — всяко пее своя нота.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;900&display=swap" rel="stylesheet">
+<style>
+  :root { --ink: #23324a; --card: rgba(255,255,255,.82); }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; user-select: none; -webkit-user-select: none; }
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #8fd3ff; color: var(--ink); font-family: Nunito, system-ui, sans-serif; }
+  canvas { position: fixed; inset: 0; display: block; touch-action: none; }
+
+  h1 { position: fixed; top: max(14px, env(safe-area-inset-top)); left: 0; right: 0; margin: 0; text-align: center; pointer-events: none;
+    font: 900 clamp(26px, 6vw, 46px)/1 Nunito, sans-serif; color: #fff; letter-spacing: .01em;
+    text-shadow: 0 3px 0 #4a9fe0, 0 6px 18px rgba(30, 80, 140, .35); }
+  #hint { position: fixed; top: calc(max(14px, env(safe-area-inset-top)) + clamp(34px, 7vw, 56px)); left: 0; right: 0; text-align: center;
+    font-weight: 700; color: #fff; opacity: .95; text-shadow: 0 2px 6px rgba(30, 80, 140, .4); pointer-events: none; transition: opacity .6s; }
+  #hint.gone { opacity: 0; }
+
+  .bar { position: fixed; left: 0; right: 0; bottom: max(16px, env(safe-area-inset-bottom)); display: flex; justify-content: center; gap: 14px; }
+  .bar button { width: 64px; height: 64px; border-radius: 50%; border: 0; background: var(--card); color: var(--ink);
+    font: 900 26px/1 Nunito, sans-serif; box-shadow: 0 5px 0 rgba(35, 50, 74, .18), 0 10px 24px rgba(35, 50, 74, .15);
+    cursor: pointer; transition: transform .12s; display: grid; place-items: center; }
+  .bar button:active { transform: translateY(3px) scale(.96); }
+  .bar button svg { width: 28px; height: 28px; }
+  #rec.on { background: #ff5b6e; color: #fff; animation: beat 1s infinite; }
+  #loop.on { background: #4fd18b; color: #fff; }
+  @keyframes beat { 50% { transform: scale(1.08); } }
+  .bar button:disabled { opacity: .35; }
+
+  #loading { position: fixed; inset: 0; display: grid; place-items: center; background: #8fd3ff; color: #fff; font-weight: 900; font-size: 22px;
+    transition: opacity .5s; z-index: 5; }
+  #loading.gone { opacity: 0; pointer-events: none; }
+</style>
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+} }
+</script>
+</head>
+<body>
+<h1>Пееща ферма</h1>
+<div id="hint">Докосни животинче 🎵</div>
+
+<nav class="bar">
+  <button id="rec" title="Запиши песничка" aria-label="Запис">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7" fill="currentColor"/></svg></button>
+  <button id="loop" title="Пусни записа" aria-label="Пусни" disabled>
+    <svg viewBox="0 0 24 24"><path d="M8 5l11 7-11 7z" fill="currentColor"/></svg></button>
+  <button id="song" title="Животните пеят сами" aria-label="Песничка">★</button>
+  <button id="clear" title="Изчисти" aria-label="Изчисти" disabled>
+    <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/></svg></button>
+</nav>
+
+<div id="loading">Животинчетата идват…</div>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>
